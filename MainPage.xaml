@@ -1,0 +1,74 @@
+﻿<ContentPage
+    x:Class="MauiTaskManager.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MauiTaskManager.ViewModels"
+    xmlns:conv="clr-namespace:MauiTaskManager.Converters">
+
+        <ContentPage.Resources>
+            <conv:PreviewTextConverter x:Key="PreviewTextConverter"/>
+            <conv:SummaryMultiConverter x:Key="SummaryMultiConverter"/>
+        </ContentPage.Resources>
+
+        <ContentPage.BindingContext>
+            <vm:TasksViewModel/>
+        </ContentPage.BindingContext>
+
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- TITLE -->
+            <Label
+            Text="My Tasks"
+            FontSize="24"
+            FontAttributes="Bold"/>
+
+            <!-- INPUT + BUTTON -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Entry
+                x:Name="TaskEntry"
+                Placeholder="Enter a new task"
+                Text="{Binding NewTaskTitle, Mode=TwoWay}"/>
+
+                <Button
+                Grid.Column="1"
+                Text="Add"
+                Command="{Binding AddTaskCommand}"
+                Margin="10,0,0,0"/>
+            </Grid>
+
+            <!-- TASK LIST -->
+            <CollectionView
+            ItemsSource="{Binding Tasks}"
+            SelectedItem="{Binding SelectedTask, Mode=OneWayToSource}">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox
+                            IsChecked="{Binding IsCompleted, Mode=TwoWay}"/>
+
+                            <Label
+                            Text="{Binding Title}"
+                            TextDecorations="{Binding IsCompleted,
+                                Converter={StaticResource PreviewTextConverter}}"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- SUMMARY -->
+            <Label
+            FontSize="12"
+            TextColor="Gray"
+            HorizontalOptions="Center">
+
+                <Label.Text>
+                    <MultiBinding Converter="{StaticResource SummaryMultiConverter}">
+                        <Binding Path="CompletedCount"/>
+                        <Binding Path="TotalCount"/>
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
+        </VerticalStackLayout>
+    </ContentPage>

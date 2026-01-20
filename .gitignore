@@ -1,0 +1,39 @@
+# ===== .NET / Visual Studio =====
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ===== Rider / VS Code =====
+.idea/
+.vscode/
+
+# ===== MAUI / Xamarin =====
+*.apk
+*.aab
+*.ipa
+*.xcarchive
+*.app
+*.dSYM/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+*.log
+
+# ===== Temporary =====
+*.tmp
+*.bak
+*.cache
+
+# ===== Build artifacts =====
+artifacts/
+TestResults/
+
+# ===== Backup files =====
+*.csproj.Backup.tmp
